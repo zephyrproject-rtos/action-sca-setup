@@ -1,0 +1,52 @@
+# Copyright 2025 Intel Corp.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Setup SCA for Zephyr
+description: Setup SCA tools
+
+inputs:
+  tool-name:
+    description: |
+      The tool to be used.
+    required: true
+  install-dir:
+    description: |
+      Installation directory
+    required: true
+  s3-access_key_id:
+    description: |
+      Access Key ID
+    required: true
+  s3-secret-access_key:
+    description: |
+      Secret Access Key
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 # v4.1.0
+      with:
+        aws-access-key-id: ${{ s3-access_key_id }}
+        aws-secret-access-key: ${{ s3-secret-access_key }}
+        aws-region: us-east-1
+
+    - name: Set up Python
+      uses: actions/setup-python@8d9ed9ac5c53483de85588cdf95a591a75ab9f55 # v5.5.0
+      with:
+        python-version: 3.12
+        cache: pip
+        cache-dependency-path: scripts/requirements-actions.txt
+
+    - name: Install Python packages
+      run: |
+        pip install awscli
+
+    - name: Download and Unpack tool
+      run: |
+        if [ "${{ tool-name }}" = "coverity" ]; then
+          aws s3 cp s3://tool-distribution.zephyrproject.org/coverity/cov-analysis-linux64-2024.6.1.tar.gz .
+          tar xvf cov-analysis-linux64-2024.6.1.tar.gz -C ${{ install-dir }}  --strip-components=1
+        fi
