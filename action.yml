@@ -53,4 +53,5 @@ runs:
           mkdir -p ${{ inputs.install-dir }}
           tar xf cov-analysis-linux64-2024.6.1.tar.gz -C ${{ inputs.install-dir }}  --strip-components=1
           rm cov-analysis-linux64-2024.6.1.tar.gz
+          echo "${{ inputs.install-dir }}/bin"  >> $GITHUB_PATH
         fi
