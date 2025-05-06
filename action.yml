@@ -50,5 +50,7 @@ runs:
       run: |
         if [ "${{ inputs.tool-name }}" = "coverity" ]; then
           aws s3 cp s3://tool-distribution.zephyrproject.org/coverity/cov-analysis-linux64-2024.6.1.tar.gz .
+          mkdir -p ${{ inputs.install-dir }}
           tar xvf cov-analysis-linux64-2024.6.1.tar.gz -C ${{ inputs.install-dir }}  --strip-components=1
+          rm cov-analysis-linux64-2024.6.1.tar.gz
         fi
