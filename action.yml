@@ -13,11 +13,11 @@ inputs:
     description: |
       Installation directory
     required: true
-  s3-access_key_id:
+  s3-access-key-id:
     description: |
       Access Key ID
     required: true
-  s3-secret-access_key:
+  s3-secret-access-key:
     description: |
       Secret Access Key
     required: true
@@ -29,8 +29,8 @@ runs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@ececac1a45f3b08a01d2dd070d28d111c5fe6722 # v4.1.0
       with:
-        aws-access-key-id: ${{ s3-access_key_id }}
-        aws-secret-access-key: ${{ s3-secret-access_key }}
+        aws-access-key-id: ${{ inputs.s3-access-key-id }}
+        aws-secret-access-key: ${{ inputs.s3-secret-access-key }}
         aws-region: us-east-1
 
     - name: Set up Python
@@ -48,5 +48,5 @@ runs:
       run: |
         if [ "${{ tool-name }}" = "coverity" ]; then
           aws s3 cp s3://tool-distribution.zephyrproject.org/coverity/cov-analysis-linux64-2024.6.1.tar.gz .
-          tar xvf cov-analysis-linux64-2024.6.1.tar.gz -C ${{ install-dir }}  --strip-components=1
+          tar xvf cov-analysis-linux64-2024.6.1.tar.gz -C ${{ inputs.install-dir }}  --strip-components=1
         fi
