@@ -1,0 +1,43 @@
+# Copyright 2025 Intel Corp.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Setup SCA for Zephyr
+description: Setup SCA tools
+
+inputs:
+  tool-name:
+    description: |
+      The tool to be used.
+    required: true
+  payload:
+    description: |
+      Payload to be analyzed
+    required: true
+  service:
+    description: |
+      Service where the upload should go
+    required: true
+  user:
+    description: |
+      User ID used for analysis
+    required: true
+  token:
+    description: |
+      Token used for analysis
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Upload Results to ${{ inputs.tool-name }}
+      shell: bash
+      run: |
+        if [ "${{ inputs.tool-name }}" = "coverity" ]; then
+          curl --form token=${{ inputs.token }} \
+            --form email=${{ inputs.user }} \
+            --form file=@${{ inputs.payload }} \
+            --form version="${{ inputs.version }}" \
+            --form description="${{ inputs.description }}" \
+            ${{ inputs.service }}
+        fi
