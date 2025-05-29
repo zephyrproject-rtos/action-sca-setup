@@ -25,10 +25,24 @@ inputs:
     description: |
       Token used for analysis
     required: true
+  version:
+    description: |
+      Version of the code
+    required: true
+  description:
+    description: |
+      Desctiption of the payload being analyzed
+    required: true
 
 runs:
   using: "composite"
   steps:
+
+    - name: Install Packages
+      shell: bash
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y curl
 
     - name: Upload Results to ${{ inputs.tool-name }}
       shell: bash
