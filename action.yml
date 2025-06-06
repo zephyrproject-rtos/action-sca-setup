@@ -69,4 +69,6 @@ runs:
           mkdir -p ~/.hasplm
           echo "[REMOTE]" >  ~/.hasplm/hasp_113938.ini
           echo "serveraddr = ${{ inputs.license-server }}" >>  ~/.hasplm/hasp_113938.ini
+          echo "requestlog = 1" >>  ~/.hasplm/hasp_113938.ini
+          echo "errorlog = 1" >> ~/.hasplm/hasp_113938.ini
         fi
