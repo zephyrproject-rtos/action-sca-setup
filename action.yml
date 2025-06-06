@@ -67,10 +67,6 @@ runs:
           ./${{ inputs.install-dir }}/bin/postinstall.sh
           echo "${{ inputs.install-dir }}/bin"  >> $GITHUB_PATH
           mkdir -p ~/.hasplm
-          cat  > ~/.hasplm/hasp_113938.ini   <<EOF
-          [REMOTE]
-          broadcastsearch = 1
-          serversearchinterval = 30
-          serveraddr = ${{ inputs.license-server }}
-          EOF
+          echo "[REMOTE]" >  ~/.hasplm/hasp_113938.ini
+          echo "serveraddr = ${{ inputs.license-server }}" >>  ~/.hasplm/hasp_113938.ini
         fi
