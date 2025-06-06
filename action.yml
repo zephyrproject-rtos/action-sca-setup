@@ -21,6 +21,11 @@ inputs:
     description: |
       Secret Access Key
     required: true
+  license-server:
+    description: |
+      License server for SCA tools.
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -61,4 +66,10 @@ runs:
           rm eclair-3.14.0.tar.bz2
           ./${{ inputs.install-dir }}/bin/postinstall.sh
           echo "${{ inputs.install-dir }}/bin"  >> $GITHUB_PATH
+          cat  > ~/.hasplm.ini  <<EOF
+          [REMOTE]
+          broadcastsearch = 1
+          serversearchinterval = 30
+          serveraddr = ${{ inputs.license-server }}
+          EOF
         fi
