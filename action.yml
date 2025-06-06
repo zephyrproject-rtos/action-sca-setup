@@ -54,4 +54,11 @@ runs:
           tar xf cov-analysis-linux64-2024.6.1.tar.gz -C ${{ inputs.install-dir }}  --strip-components=1
           rm cov-analysis-linux64-2024.6.1.tar.gz
           echo "${{ inputs.install-dir }}/bin"  >> $GITHUB_PATH
+        elif [  "${{ inputs.tool-name }}" = "eclair" ]; then
+          aws s3 cp --quiet  s3://tool-distribution.zephyrproject.org/eclair/eclair-3.14.0.tar.bz2 .
+          mkdir -p ${{ inputs.install-dir }}
+          tar xf eclair-3.14.0.tar.bz2 -C ${{ inputs.install-dir }}  --strip-components=1
+          rm eclair-3.14.0.tar.bz2
+          ./${{ inputs.install-dir }}/bin/postinstall.sh
+          echo "${{ inputs.install-dir }}/bin"  >> $GITHUB_PATH
         fi
