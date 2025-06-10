@@ -72,4 +72,5 @@ runs:
           echo "[SERVER]" >>  ~/.hasplm/hasp_113938.ini
           echo "requestlog = 1" >>  ~/.hasplm/hasp_113938.ini
           echo "errorlog = 1" >> ~/.hasplm/hasp_113938.ini
+          eclair_licman -d 57350 -s k=630257348907412819 -t 60
         fi
