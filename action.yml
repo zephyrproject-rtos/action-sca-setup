@@ -29,6 +29,11 @@ inputs:
 
 runs:
   using: "composite"
+  post:
+    - name: Release License
+      shell: bash
+      run: |
+        ${{ inputs.install-dir }}/eclair_licman -c 57350
   steps:
 
     - name: Configure AWS Credentials
@@ -72,5 +77,5 @@ runs:
           echo "[SERVER]" >>  ~/.hasplm/hasp_113938.ini
           echo "requestlog = 1" >>  ~/.hasplm/hasp_113938.ini
           echo "errorlog = 1" >> ~/.hasplm/hasp_113938.ini
-          ./${{ inputs.install-dir }}/bin/eclair_licman -d 57350 -s k=630257348907412819 -t 3600
+          ./${{ inputs.install-dir }}/bin/eclair_licman -d 57350 -s k=630257348907412819 -t 120
         fi
