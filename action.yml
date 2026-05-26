@@ -9,6 +9,10 @@ inputs:
     description: |
       The tool to be used.
     required: true
+  tool-version:
+    description: |
+      The tool version to be used.
+    required: true
   install-dir:
     description: |
       Installation directory
@@ -64,10 +68,10 @@ runs:
           rm cov-analysis-linux64-2024.6.1.tar.gz
           echo "${{ inputs.install-dir }}/bin"  >> $GITHUB_PATH
         elif [  "${{ inputs.tool-name }}" = "eclair" ]; then
-          aws s3 cp --quiet  s3://tooldist/eclair/eclair-3.14.0.tar.bz2 .
+          aws s3 cp --quiet  s3://tooldist/eclair/eclair-${{ inputs.tool-version }}.tar.bz2 .
           mkdir -p ${{ inputs.install-dir }}
-          tar xf eclair-3.14.0.tar.bz2 -C ${{ inputs.install-dir }}  --strip-components=1
-          rm eclair-3.14.0.tar.bz2
+          tar xf eclair-${{ inputs.tool-version }}.tar.bz2 -C ${{ inputs.install-dir }}  --strip-components=1
+          rm eclair-${{ inputs.tool-version }}.tar.bz2
           ./${{ inputs.install-dir }}/bin/postinstall.sh
           echo "${{ inputs.install-dir }}/bin"  >> $GITHUB_PATH
           mkdir -p ~/.hasplm
